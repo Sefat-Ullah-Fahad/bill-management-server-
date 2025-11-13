@@ -7,6 +7,10 @@ const express = require('express');
 const cors = require('cors');
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
 
+require('dotenv').config()
+
+
+
 const app = express();
 const port = process.env.PORT || 2000;
 
@@ -14,7 +18,7 @@ const port = process.env.PORT || 2000;
 app.use(cors());
 app.use(express.json());
 
-const uri = "mongodb+srv://bill-management:uMSgt14cnTdjgQAR@cluster0.okhtwbu.mongodb.net/?appName=Cluster0";
+const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASSWORD}@cluster0.okhtwbu.mongodb.net/?appName=Cluster0`;
 
 const client = new MongoClient(uri, {
   serverApi: {
@@ -26,7 +30,7 @@ const client = new MongoClient(uri, {
 
 async function run() {
   try {
-    await client.connect();
+    // await client.connect();
     console.log("✅ MongoDB Connected");
 
     const db = client.db("bills_db");
@@ -99,13 +103,6 @@ async function run() {
   }
 });
 
-
-
-
-
-
-
-
     // ✅ Insert multiple bills (Seed)
     app.post("/bills/seed", async (req, res) => {
       const result = await billsCollection.insertMany(req.body);
@@ -134,7 +131,7 @@ async function run() {
       }
     });
 
-    // ✅ Save payment (future use)
+    // ✅ Save payment & (future use)
     app.post("/payments", async (req, res) => {
       try {
         const payment = await paymentsCollection.insertOne(req.body);
