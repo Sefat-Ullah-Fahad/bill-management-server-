@@ -134,7 +134,7 @@ async function run() {
         const payment = await paymentsCollection.insertOne(req.body);
         res.send(payment);
       } catch {
-        res.status(500).send({ message: "Error saving payment" });
+        res.status(500).send({ message: "Error saved payment" });
       }
     });
 
