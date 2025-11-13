@@ -117,14 +117,14 @@ async function run() {
       res.send(bills);
     });
 
-    // ✅ Pay Bill / Save Bill
+    // ✅ Pay Bill / Save bill
     app.post("/myBills", async (req, res) => {
       try {
         const billData = req.body;
         const result = await myBillsCollection.insertOne(billData);
         res.status(201).send({ ...billData, _id: result.insertedId });
       } catch {
-        res.status(500).send({ error: "Failed to save bill" });
+        res.status(500).send({ error: "Failed to save bills" });
       }
     });
 
